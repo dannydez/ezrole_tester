@@ -56,3 +56,21 @@ function ezrole_tester_install() {
     User::create($values)->save();
   }
 }
+
+/**
+ * Implements hook_uninstall().
+ */
+function ezrole_tester_uninstall() {
+  $roles = user_roles(TRUE);
+
+  foreach ($roles as $role => $role_info) {
+    $users = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties([
+      'name' => 'ez-' . $role
+    ]);
+
+    if (!empty($users)) {
+      $user = reset($users);
+      user_delete($user->id());
+    }
+  }
+}
