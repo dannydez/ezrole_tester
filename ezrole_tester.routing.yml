@@ -1,0 +1,7 @@
+ezrole_tester.collection:
+  path: '/admin/config/user-interface/test-accounts'
+  defaults:
+    _title: 'Test accounts'
+    _controller: '\Drupal\ezrole_tester\Controller\TestAccount::set'
+  requirements:
+    _permission: 'administer shortcuts'

@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @file
+ * Ezrole_tester.
+ */
+
+use Drupal\Core\Url;
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_toolbar_alter().
+ */
+function ezrole_tester_toolbar() {
+  $items = [];
+
+  $items['ezrole_tester'] = [
+    '#type' => 'toolbar_item',
+    'tab' => [
+      '#type' => 'link',
+      '#title' => t('Test Accounts'),
+      '#url' => Url::fromRoute('ezrole_tester.collection'),
+      '#attributes' => [
+        'title' => t('Test Accounts'),
+        'class' => [
+          'toolbar-icon',
+          'toolbar-icon-user'
+        ]
+      ]
+    ],
+    'tray' => [
+      'test_accounts' => [
+        '#theme' => 'links__toolbar_shortcuts',
+      ]
+    ],
+    '#cache' => [
+      'max-age' => 0
+    ]
+  ];
+
+  $roles = user_roles(TRUE);
+
+  $current = User::load(\Drupal::currentUser()->id());
+  foreach ($roles as $role => $role_info) {
+    $title = $role_info->label();
+
+    if ($current->label() == 'ez-' . $role) {
+      $title = $role_info->label() . ' ( Active )';
+    }
+
+    $items['ezrole_tester']['tray']['test_accounts']['#links'][] = [
+      'type' => 'link',
+      'title' => $title,
+      'url' => Url::fromRoute('ezrole_tester.collection', [
+        'account' => 'ez-' . $role,
+        'destination' => \Drupal::destination()->get(),
+        'original' => FALSE,
+        'role' => $role_info->label()
+      ])
+    ];
+  }
+
+  if (isset($_SESSION['ezTestAccount']) && isset($_SESSION['ezCurrentAccount'])) {
+    $admin = User::load($_SESSION['ezCurrentAccount']);
+    $items['ezrole_tester']['tray']['test_accounts']['#links'][] = [
+      'type' => 'link',
+      'title' => t('Back to original'),
+      'url' => Url::fromRoute('ezrole_tester.collection', [
+        'account' => $admin->label(),
+        'destination' => \Drupal::destination()->get(),
+        'original' => TRUE
+      ])
+    ];
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function ezrole_tester_preprocess_html(&$variables) {
+  if (!$variables['page_top']['toolbar']['#access']) {
+    $variables['page_top']['toolbar']['#access'] = TRUE;
+    drupal_set_message(t('Toolbar normally not visible with this role'), 'notice');
+  }
+}

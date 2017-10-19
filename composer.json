@@ -1,0 +1,8 @@
+{
+  "name": "ezmod/ezrole_tester",
+  "type": "drupal-custom-module",
+  "license": "GPL-2.0+",
+  "homepage": "https://github.com/dannydez/ezrole_tester",
+  "description": "Easy access to other roles",
+  "author": "Danny Dohmen | ezCompany"
+}

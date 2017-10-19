@@ -1,0 +1,5 @@
+services:
+  ezrole_checkuser_subscriber:
+    class: Drupal\ezrole_tester\EventSubscriber\CheckUser
+    tags:
+      - {name: event_subscriber}

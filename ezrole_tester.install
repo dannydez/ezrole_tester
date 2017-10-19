@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Contains the ezrole_tester install hooks.
+ */
+
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_install().
+ */
+function ezrole_tester_install() {
+  $roles = user_roles(TRUE);
+
+  $fieldMap = \Drupal::entityManager()->getFieldMap();
+  $values = [];
+  foreach ($roles as $role => $role_info) {
+    $values['roles'] = [$role];
+    foreach ($fieldMap['user'] as $field => $info) {
+      if (!in_array($field, [
+        'uid',
+        'uuid',
+        'langcode',
+        'preferred_langcode',
+        'preferred_admin_langcode',
+        'created',
+        'changed',
+        'access',
+        'login',
+        'roles',
+        'path',
+        'user_picture',
+        'timezone',
+        'default_langcode'
+        ])) {
+        switch ($info['type']) {
+          case "string":
+            $values[$field] = 'ez-' . $role;
+            break;
+
+          case "password":
+            $values[$field] = user_password();
+            break;
+
+          case "email":
+            $values[$field] = $role . '@ezcompany.nl';
+            break;
+
+          case "boolean":
+            $values[$field] = 1;
+            break;
+        }
+      }
+    }
+    User::create($values)->save();
+  }
+}

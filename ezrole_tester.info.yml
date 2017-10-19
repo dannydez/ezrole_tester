@@ -1,0 +1,5 @@
+name: ezRole module
+type: module
+description: 'Easy role testing.'
+core: 8.x
+package: ezCompany
