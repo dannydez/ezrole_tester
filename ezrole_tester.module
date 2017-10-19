@@ -38,7 +38,7 @@ function ezrole_tester_toolbar() {
     ]
   ];
 
-  $roles = user_roles(TRUE);
+  $roles = user_roles();
 
   $current = User::load(\Drupal::currentUser()->id());
   foreach ($roles as $role => $role_info) {

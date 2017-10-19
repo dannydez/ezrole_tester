@@ -11,7 +11,7 @@ use Drupal\user\Entity\User;
  * Implements hook_install().
  */
 function ezrole_tester_install() {
-  $roles = user_roles(TRUE);
+  $roles = user_roles();
 
   $fieldMap = \Drupal::entityManager()->getFieldMap();
   $values = [];
@@ -61,7 +61,7 @@ function ezrole_tester_install() {
  * Implements hook_uninstall().
  */
 function ezrole_tester_uninstall() {
-  $roles = user_roles(TRUE);
+  $roles = user_roles();
 
   foreach ($roles as $role => $role_info) {
     $users = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties([
