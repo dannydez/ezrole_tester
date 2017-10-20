@@ -24,13 +24,18 @@ function ezrole_tester_toolbar() {
         'title' => t('Test Accounts'),
         'class' => [
           'toolbar-icon',
-          'toolbar-icon-user'
+          'toolbar-icon-accounts'
         ]
       ]
     ],
     'tray' => [
       'test_accounts' => [
         '#theme' => 'links__toolbar_shortcuts',
+      ]
+    ],
+    '#attached' => [
+      'library' => [
+        'ezrole_tester/ezrole_tester.css'
       ]
     ],
     '#cache' => [

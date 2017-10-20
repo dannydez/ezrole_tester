@@ -53,7 +53,14 @@ function ezrole_tester_install() {
         }
       }
     }
-    User::create($values)->save();
+
+    $users = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties([
+      'name' => 'ez-' . $role
+    ]);
+
+    if (empty($users)) {
+      User::create($values)->save();
+    }
   }
 }
 

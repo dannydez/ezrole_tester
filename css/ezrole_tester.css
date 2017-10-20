@@ -1,0 +1,7 @@
+.toolbar-bar .toolbar-icon-accounts:before {
+  background-image: url('../img/icon-groups.png');
+}
+
+.toolbar-bar .toolbar-icon-accounts.is-active:before {
+  background-image: url('../img/icon-groups-active.png');
+}
