@@ -19,10 +19,8 @@ class TestAccount extends ControllerBase {
     $original = \Drupal::request()->get('original');
     $role = \Drupal::request()->get('role');
 
-
-
     $users = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties([
-      'name' => $account_name
+      'name' => $account_name,
     ]);
 
     if ($account_name == 'ez-anonymous') {

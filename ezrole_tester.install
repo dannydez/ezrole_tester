@@ -32,8 +32,8 @@ function ezrole_tester_install() {
         'path',
         'user_picture',
         'timezone',
-        'default_langcode'
-        ])) {
+        'default_langcode',
+      ])) {
         switch ($info['type']) {
           case "string":
             $values[$field] = 'ez-' . $role;
@@ -55,7 +55,7 @@ function ezrole_tester_install() {
     }
 
     $users = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties([
-      'name' => 'ez-' . $role
+      'name' => 'ez-' . $role,
     ]);
 
     if (empty($users)) {
@@ -72,7 +72,7 @@ function ezrole_tester_uninstall() {
 
   foreach ($roles as $role => $role_info) {
     $users = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties([
-      'name' => 'ez-' . $role
+      'name' => 'ez-' . $role,
     ]);
 
     if (!empty($users)) {

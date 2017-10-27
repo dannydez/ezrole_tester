@@ -24,23 +24,23 @@ function ezrole_tester_toolbar() {
         'title' => t('Test Accounts'),
         'class' => [
           'toolbar-icon',
-          'toolbar-icon-accounts'
-        ]
-      ]
+          'toolbar-icon-accounts',
+        ],
+      ],
     ],
     'tray' => [
       'test_accounts' => [
         '#theme' => 'links__toolbar_shortcuts',
-      ]
+      ],
     ],
     '#attached' => [
       'library' => [
-        'ezrole_tester/ezrole_tester.css'
-      ]
+        'ezrole_tester/ezrole_tester.css',
+      ],
     ],
     '#cache' => [
-      'max-age' => 0
-    ]
+      'max-age' => 0,
+    ],
   ];
 
   $roles = user_roles();
@@ -60,8 +60,8 @@ function ezrole_tester_toolbar() {
         'account' => 'ez-' . $role,
         'destination' => \Drupal::destination()->get(),
         'original' => FALSE,
-        'role' => $role_info->label()
-      ])
+        'role' => $role_info->label(),
+      ]),
     ];
   }
 
@@ -73,8 +73,8 @@ function ezrole_tester_toolbar() {
       'url' => Url::fromRoute('ezrole_tester.collection', [
         'account' => $admin->label(),
         'destination' => \Drupal::destination()->get(),
-        'original' => TRUE
-      ])
+        'original' => TRUE,
+      ]),
     ];
   }
 
