@@ -2,4 +2,3 @@ ezrole_tester.collection:
   title: Test accounts
   description: 'Test accounts'
   route_name: ezrole_tester.collection
-  parent: system.admin_config_ui
