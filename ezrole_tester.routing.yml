@@ -4,4 +4,4 @@ ezrole_tester.collection:
     _title: 'Test accounts'
     _controller: '\Drupal\ezrole_tester\Controller\TestAccount::set'
   requirements:
-    _permission: 'administer shortcuts'
+    _custom_access:  '\Drupal\ezrole_tester\Controller\TestAccount::access'

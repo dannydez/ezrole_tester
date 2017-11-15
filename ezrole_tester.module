@@ -43,13 +43,15 @@ function ezrole_tester_toolbar() {
     ],
   ];
 
-  $roles = user_roles();
+  $roles = user_roles(TRUE);
 
   $current = User::load(\Drupal::currentUser()->id());
+  $active = FALSE;
   foreach ($roles as $role => $role_info) {
     $title = $role_info->label();
 
     if ($current->label() == 'ez-' . $role) {
+      $active = TRUE;
       $title = $role_info->label() . ' ( Active )';
     }
 
@@ -65,8 +67,8 @@ function ezrole_tester_toolbar() {
     ];
   }
 
-  if (isset($_SESSION['ezTestAccount']) && isset($_SESSION['ezCurrentAccount'])) {
-    $admin = User::load($_SESSION['ezCurrentAccount']);
+  if ($active == TRUE) {
+    $admin = User::load(1);
     $items['ezrole_tester']['tray']['test_accounts']['#links'][] = [
       'type' => 'link',
       'title' => t('Back to original'),
@@ -85,8 +87,17 @@ function ezrole_tester_toolbar() {
  * Implements hook_preprocess_HOOK().
  */
 function ezrole_tester_preprocess_html(&$variables) {
-  if (!$variables['page_top']['toolbar']['#access'] && isset($_SESSION['ezTestAccount'])) {
+  $toolbar = FALSE;
+  $roles = user_roles();
+
+  foreach ($roles as $role => $row) {
+    if (\Drupal::currentUser()->getUsername() == 'ez-' . $role) {
+      $toolbar = TRUE;
+    }
+  }
+
+  if (!$variables['page_top']['toolbar']['#access'] && $toolbar == TRUE) {
     $variables['page_top']['toolbar']['#access'] = TRUE;
-    drupal_set_message(t('Toolbar normally not visible with this role'), 'notice');
+    drupal_set_message(t('Toolbar normally not visible with this role'));
   }
 }
